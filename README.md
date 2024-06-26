@@ -1,5 +1,14 @@
 ### 1. Sistema de Gerenciamento de Serviços (Backend em Python)
 
+Interface inicial (basica)
+<div align="center">
+<img src="https://raw.githubusercontent.com/JarlysonHG/Gerenciamento-de-servi-o-baseado-em-Cloud-IoT-e-Ind-stria-4.0/main/Img/ezgif-1-16c56df9b1.gif" width="400px" />
+</div>
+<div align="center">
+<img src="https://raw.githubusercontent.com/JarlysonHG/Gerenciamento-de-servi-o-baseado-em-Cloud-IoT-e-Ind-stria-4.0/main/Img/ezgif-1-3f3418ccd6.gif" width="400px" />
+</div>
+
+
 #### a) Configuração do Servidor Backend
 
 Para o backend, usaremos o framework Flask para criar uma API que permita gerenciar os serviços da oficina. 
