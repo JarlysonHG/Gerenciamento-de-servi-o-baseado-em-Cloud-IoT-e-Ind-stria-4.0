@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficina de Moto Peças</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Gerenciamento de Serviços da Oficina</h1>
+<section>
+    <h2>Adicionar Serviço</h2>
+    <form id="add-service-form">
+        <div class="form-group">
+            <label for="description">Descrição:</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="Pendente">Pendente</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Concluído">Concluído</option>
+            </select>
+        </div>
+        <button type="submit">Adicionar</button>
+    </form>
+</section>
+<section>
+    <table id="services-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Descrição</th>
+            <th>Status</th>
+            <th>Criado em</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    </table>
+</section>
+    <script>
+        const servicesTable = document.getElementById('services-table');
+        const addServiceForm = document.getElementById('add-service-form');
+
+        function fetchServices() {
+            fetch('backend/services')
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(service => {
+                        const row = servicesTable.insertRow();
+                        row.insertCell(0).innerText = service.id;
+                        row.insertCell(1).innerText = service.description;
+                        row.insertCell(2).innerText = service.status;
+                        row.insertCell(3).innerText = service.created_at;
+                    });
+                });
+        }
+
+        addServiceForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(addServiceForm);
+            const data = {
+                description: formData.get('description'),
+                status: formData.get('status')
+            };
+
+            fetch('http://<YOUR_BACKEND_IP>:5000/services', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(service => {
+                const row = servicesTable.insertRow();
+                row.insertCell(0).innerText = service.id;
+                row.insertCell(1).innerText = service.description;
+                row.insertCell(2).innerText = service.status;
+                row.insertCell(3).innerText = service.created_at;
+                addServiceForm.reset();
+            });
+        });
+
+        window.onload = fetchServices;
+    </script>
+</div>
+</body>
+</html>
